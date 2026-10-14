@@ -6,7 +6,9 @@
   <meta name="theme-color" content="#0b1329" />
   <title>Student Expense Tracker</title>
   
-  <!-- Add this line: -->
+  <!-- App & Browser Tab Icon -->
+  <link rel="icon" type="image/png" href="./logo.png" />
+  <link rel="apple-touch-icon" href="./logo.png" />
   <link rel="manifest" href="manifest.json" />
   
   <link rel="stylesheet" href="style.css" />
@@ -42,9 +44,12 @@
     <!-- Main Dashboard Section -->
     <main id="app-section" class="hidden">
       <header class="app-header">
-        <div>
-          <h2>Welcome, <span id="user-display">Student</span>!</h2>
-          <p class="subtext">Track your campus cash flow</p>
+        <div class="brand-group">
+          <img src="./logo.png" alt="Expense Tracker Logo" class="app-logo" />
+          <div>
+            <h2>Welcome, <span id="user-display">Student</span>!</h2>
+            <p class="subtext">Track your campus cash flow</p>
+          </div>
         </div>
         <button id="logout-btn" class="btn secondary outline">Logout</button>
       </header>
