@@ -5,19 +5,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#0b1329" />
   <title>Student Expense Tracker</title>
-  
-  <!-- App & Browser Tab Icon -->
+
+  <!-- PWA & Favicon Links -->
   <link rel="icon" type="image/png" href="./logo.png" />
   <link rel="apple-touch-icon" href="./logo.png" />
-  <link rel="manifest" href="manifest.json" />
-  
-  <link rel="stylesheet" href="style.css" />
+  <link rel="manifest" href="./manifest.json" />
+
+  <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
   <div class="app-container">
     <!-- Auth Section -->
     <section id="auth-section" class="card">
-      <h2 id="auth-title">Student Login</h2>
+      <div class="auth-brand">
+        <img src="./logo.png" alt="App Logo" class="auth-logo" />
+        <h2 id="auth-title">Student Login</h2>
+      </div>
       <form id="auth-form">
         <div class="form-group">
           <label for="auth-email">Email / Username</label>
@@ -79,8 +82,8 @@
 
       <!-- Forms Grid -->
       <div class="dashboard-grid">
-        <!-- Budget Form & Category Manager -->
         <div class="stacked-col">
+          <!-- Budget Form -->
           <section class="card">
             <h3>Set Monthly Budget</h3>
             <form id="budget-form">
@@ -134,7 +137,7 @@
 
             <div class="form-group">
               <label for="tx-note">Note / Description</label>
-              <input type="text" id="tx-note" placeholder="Hostel canteen dosa, printouts..." />
+              <input type="text" id="tx-note" placeholder="Hostel mess, printouts, books..." />
             </div>
 
             <button type="submit" class="btn primary">Add Record</button>
@@ -178,6 +181,6 @@
     </main>
   </div>
 
-  <script src="app.js"></script>
+  <script src="./app.js"></script>
 </body>
 </html>

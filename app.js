@@ -1,4 +1,4 @@
-// Default categories provided for all new student accounts
+// Default categories for new student accounts
 const DEFAULT_CATEGORIES = [
   "Food & Mess",
   "Travel & Commute",
@@ -46,7 +46,7 @@ const budgetAlert = document.getElementById("budget-alert");
 const categorySummaryList = document.getElementById("category-summary-list");
 const transactionTableBody = document.getElementById("transaction-table-body");
 
-// Initialize default date to today
+// Initialize today's date
 txDateInput.value = new Date().toISOString().split("T")[0];
 
 // Storage Helpers
@@ -77,7 +77,7 @@ function validateStrongPassword(password) {
   return null;
 }
 
-// Show / Hide Password Toggle
+// Toggle Show/Hide Password
 togglePasswordBtn.addEventListener("click", () => {
   const isPassword = authPasswordInput.getAttribute("type") === "password";
   if (isPassword) {
@@ -89,7 +89,7 @@ togglePasswordBtn.addEventListener("click", () => {
   }
 });
 
-// Auth Toggle (Login vs Register)
+// Toggle Auth Mode (Login vs Register)
 authToggleLink.addEventListener("click", (e) => {
   e.preventDefault();
   isRegisterMode = !isRegisterMode;
@@ -105,7 +105,7 @@ authToggleLink.addEventListener("click", (e) => {
   }
 });
 
-// Auth Form Submission
+// Auth Submission
 authForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const email = document.getElementById("auth-email").value.trim().toLowerCase();
@@ -139,7 +139,6 @@ authForm.addEventListener("submit", (e) => {
       return;
     }
     currentUser = users[email];
-    // Backwards compatibility for existing users without categories
     if (!currentUser.categories || currentUser.categories.length === 0) {
       currentUser.categories = [...DEFAULT_CATEGORIES];
       saveUserData(currentUser);
@@ -150,7 +149,7 @@ authForm.addEventListener("submit", (e) => {
   initDashboard();
 });
 
-// Logout Handler
+// Logout
 logoutBtn.addEventListener("click", () => {
   localStorage.removeItem("current_user");
   currentUser = null;
@@ -161,7 +160,7 @@ logoutBtn.addEventListener("click", () => {
   appSection.classList.add("hidden");
 });
 
-// Update Monthly Budget
+// Set Monthly Budget
 budgetForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const budgetVal = parseFloat(budgetAmountInput.value);
@@ -174,7 +173,7 @@ budgetForm.addEventListener("submit", (e) => {
   renderDashboard();
 });
 
-// Custom Category: Add New
+// Add Custom Category
 customCategoryForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const newCat = newCategoryInput.value.trim();
@@ -184,7 +183,6 @@ customCategoryForm.addEventListener("submit", (e) => {
     currentUser.categories = [...DEFAULT_CATEGORIES];
   }
 
-  // Prevent duplicate categories
   const exists = currentUser.categories.some(
     (c) => c.toLowerCase() === newCat.toLowerCase()
   );
@@ -203,7 +201,7 @@ customCategoryForm.addEventListener("submit", (e) => {
   renderDashboard();
 });
 
-// Custom Category: Delete
+// Delete Custom Category
 function deleteCategory(catName) {
   if (currentUser.categories.length <= 1) {
     alert("You must keep at least one category.");
@@ -218,11 +216,10 @@ function deleteCategory(catName) {
   renderDashboard();
 }
 
-// Populate Categories in Dropdown and Badges
+// Populate Categories
 function populateCategories() {
   const categories = currentUser.categories || DEFAULT_CATEGORIES;
 
-  // Populate Dropdown
   txCategorySelect.innerHTML = "";
   categories.forEach((cat) => {
     const opt = document.createElement("option");
@@ -231,7 +228,6 @@ function populateCategories() {
     txCategorySelect.appendChild(opt);
   });
 
-  // Populate Badge Manager
   categoryBadgeList.innerHTML = "";
   categories.forEach((cat) => {
     const badge = document.createElement("div");
@@ -244,7 +240,7 @@ function populateCategories() {
   });
 }
 
-// Add Transaction (Income or Expense)
+// Add Transaction
 transactionForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const type = document.getElementById("tx-type").value;
@@ -281,7 +277,7 @@ function deleteTransaction(id) {
   renderDashboard();
 }
 
-// Render Dashboard & Calculations
+// Render Dashboard Data
 function renderDashboard() {
   const budget = currentUser.budget || 0;
   const transactions = currentUser.transactions || [];
@@ -301,14 +297,12 @@ function renderDashboard() {
 
   const remaining = budget - totalExpense;
 
-  // Render Metrics
   displayBudget.textContent = `₹${budget.toFixed(2)}`;
   displaySpent.textContent = `₹${totalExpense.toFixed(2)}`;
   displayRemaining.textContent = `₹${remaining.toFixed(2)}`;
   displayRemaining.className = remaining < 0 ? "expense-text" : "income-text";
   displayIncome.textContent = `₹${totalIncome.toFixed(2)}`;
 
-  // 80% and 100% Alerts
   if (budget > 0) {
     const usagePercent = (totalExpense / budget) * 100;
     if (usagePercent >= 100) {
@@ -324,7 +318,6 @@ function renderDashboard() {
     budgetAlert.className = "alert-banner hidden";
   }
 
-  // Render Category Breakdown
   categorySummaryList.innerHTML = "";
   const categoriesWithSpending = Object.keys(categoryMap);
   if (categoriesWithSpending.length === 0) {
@@ -343,7 +336,6 @@ function renderDashboard() {
     });
   }
 
-  // Render Transactions Table
   transactionTableBody.innerHTML = "";
   if (transactions.length === 0) {
     transactionTableBody.innerHTML = `<tr><td colspan="5" class="empty-state">No transactions recorded.</td></tr>`;
@@ -367,7 +359,7 @@ function renderDashboard() {
   }
 }
 
-// Initialize View for Logged-In User
+// Initialize View
 function initDashboard() {
   authSection.classList.add("hidden");
   appSection.classList.remove("hidden");
@@ -385,8 +377,8 @@ if (currentUser) {
 if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("./sw.js", { scope: "./" })
+      .register("./sw.js")
       .then((reg) => console.log("Service Worker registered:", reg.scope))
-      .catch((err) => console.error("Service Worker failed:", err));
+      .catch((err) => console.error("Service Worker registration failed:", err));
   });
 }

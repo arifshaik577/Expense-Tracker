@@ -1,9 +1,8 @@
 {
   "name": "Student Expense Tracker",
   "short_name": "ExpenseTracker",
-  "id": "/Expense-Tracker/",
-  "start_url": "/Expense-Tracker/",
-  "scope": "/Expense-Tracker/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#0b1329",
   "theme_color": "#0b1329",
